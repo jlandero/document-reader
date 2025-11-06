@@ -216,7 +216,6 @@ export default function App() {
       console.log('[PROCESS_FINISHED] status=', status, 'imgs buffer=', imagesRef.current.length, 'hasContainerList=', !!lastContainerListRef.current);
       if (status !== 1 && status !== 2) {
         const reason = (data as any)?.reason || (data as any)?.message || 'Proceso no exitoso';
-        alert(`Captura no exitosa: ${reason}`);
         return;
       }
 
@@ -235,15 +234,12 @@ export default function App() {
           if (List.length) {
             console.log('[BACK] usando containerList convertido → /api/process con', List.length, 'página(s)');
             await sendProcessList(List);
-            alert(`OK: enviadas ${List.length} imagen(es) (from containerList)`);
             return;
           }
           console.warn('[containerList] sin base64 aprovechable');
         }
-        alert('No hay imágenes en buffer ni containerList utilizable. Repite la captura.');
       } catch (ex: any) {
         console.error('Fallo /api/process:', ex);
-        alert('Fallo /api/process: ' + (ex?.message || String(ex)));
       }
     }
 
